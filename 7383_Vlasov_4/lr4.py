@@ -7,7 +7,7 @@ from tensorflow.keras import optimizers
 from PIL import Image
 import numpy as np
 
-EPOHS = 5
+EPOCHS = 5
 IMAGE_WIDTH = 28
 IMAGE_HEIGHT = 28
 
@@ -46,13 +46,13 @@ def loadImage(path):
     return image
 
 
-def trainModel(optimizer, epohs):
+def trainModel(optimizer, epochs):
     optimizerConf = optimizer.get_config()
     print(
         "Researching with optimizer %s with learning rate %s" % (optimizerConf["name"], optimizerConf["learning_rate"]))
 
     model = buildModel(optimizer)
-    history = model.fit(train_images, train_labels, epochs=epohs,
+    history = model.fit(train_images, train_labels, epochs=epochs,
                         batch_size=128, validation_data=(test_images, test_labels))
 
     test_loss, test_acc = model.evaluate(test_images, test_labels)
@@ -80,10 +80,10 @@ train_images, train_labels, test_images, test_labels = loadData()
 result = dict()
 
 for learning_rate in [0.001, 0.01, 0.1]:
-    trainModel(optimizers.Adagrad(learning_rate=learning_rate), EPOHS)
-    trainModel(optimizers.Adam(learning_rate=learning_rate), EPOHS)
-    trainModel(optimizers.RMSprop(learning_rate=learning_rate), EPOHS)
-    trainModel(optimizers.SGD(learning_rate=learning_rate), EPOHS)
+    trainModel(optimizers.Adagrad(learning_rate=learning_rate), EPOCHS)
+    trainModel(optimizers.Adam(learning_rate=learning_rate), EPOCHS)
+    trainModel(optimizers.RMSprop(learning_rate=learning_rate), EPOCHS)
+    trainModel(optimizers.SGD(learning_rate=learning_rate), EPOCHS)
 
 for res in result:
     print("%s: %s" % (res, result[res]))
